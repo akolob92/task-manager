@@ -6,13 +6,13 @@
       [class.expired]="isExpired(task.date)"
       dnd-sortable [sortableIndex]="i" [dragData]="task" (onDropSuccess)="onMove($event, i)"
   >
-    <input type="checkbox" [(ngModel)]="task.closed">
+    <input type="checkbox" [(ngModel)]="task.closed" (change)="taskService.saveTasks()">
 
     <!--<button class="btn btn-sm btn-success" (click)="closeTask(task)"><i class="fa fa-check"></i></button>-->
     <!--<button class="btn btn-sm btn-warning" (click)="editTask(task)"><i class="fa fa-edit"></i></button>-->
     <span (click)="editTask(task)">
       <i (click)="deleteTask(task)" class="mx-1 float-right fa fa-trash"></i>
-      <span class="task-header">{{ task.header }}</span>
+      <div class="task-header">{{ task.header }}</div>
       <span class="mx-1 float-right task-date">{{ task.date | date }}</span>
     </span>
  </li>

@@ -1,5 +1,10 @@
-li.closed span.task-header {
+li.closed .task-header {
   text-decoration: line-through;
+}
+
+li div {
+  width: 80%;
+  display: inline-block;
 }
 
 .soon {

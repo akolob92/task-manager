@@ -28,26 +28,12 @@ export class ListComponent implements OnInit {
 
   editTask(task): void {
     const modal = this.modalService.open(TaskComponent, {size: 'lg'});
-    modal.componentInstance.task = task;
+    modal.componentInstance.task = Object.assign({}, task);
 
     modal.result.then((result) => {
-      task = result;
+      this.taskService.updateTask(task.id, result);
       this.taskService.saveTasks();
-      console.log(result);
-    }, (reason) => {
-      this.getDismissReason(reason);
-    });
-    console.log(1);
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+    }, () => {});
   }
 
   deleteTask(task): void {
@@ -62,10 +48,7 @@ export class ListComponent implements OnInit {
 
     modal.result.then((result) => {
       this.taskService.createTask(result);
-    }, (reason) => {
-      this.getDismissReason(reason);
-    });
-    console.log(1);
+    }, () => {});
   }
 
   closeTask(task): void {
@@ -76,7 +59,7 @@ export class ListComponent implements OnInit {
     this.taskService.moveTask(task, position);
   }
 
-  constructor(private taskService: TaskService,
+  constructor(public taskService: TaskService,
               private modalService: NgbModal) {
   }
 

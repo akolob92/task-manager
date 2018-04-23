@@ -44,6 +44,14 @@ export class TaskService implements OnInit {
     this.saveTasks();
   }
 
+  updateTask(id, updatedTask: Task): void {
+    const taskIndex = this.tasks.findIndex(t => +t.id === +updatedTask.id);
+    if (taskIndex > -1) {
+      this.tasks.splice(taskIndex, 1, updatedTask);
+      this.saveTasks();
+    }
+  }
+
   deleteTask(task): void {
     const taskIndex = this.tasks.findIndex(t => +t.id === +task.id);
     if (taskIndex > -1) {
