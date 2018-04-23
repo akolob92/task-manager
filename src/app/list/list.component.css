@@ -1,0 +1,14 @@
+li.closed span.task-header {
+  text-decoration: line-through;
+}
+
+.soon {
+  background-color: mistyrose;
+}
+
+.fa:hover {
+  color: #4b4b4b;
+}
+.expired {
+  background-color: indianred;
+}

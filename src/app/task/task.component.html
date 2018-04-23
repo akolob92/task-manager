@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    <span *ngIf="task.id">Task #{{task.id}}</span>
+    <span *ngIf="!task.id">New Task</span>
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-6">
+      <input placeholder="header..." class="form-control" [(ngModel)]="task.header"/>
+    </div>
+    <div class="col-6">
+      <app-date-input [date]="task.date" (change)="task.date = $event"></app-date-input>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col-12">
+      <textarea placeholder="Description..." class="form-control" [(ngModel)]="task.description"></textarea>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="save()">Save</button>
+  <button type="button" class="btn btn-light" (click)="cancel()">Cancel</button>
+</div>

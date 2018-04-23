@@ -1,0 +1,20 @@
+<button class="btn btn-sm btn-outline-success" (click)="createTask()">New Task&nbsp;<i class="fa fa-plus"></i></button>
+<ul class="m-3 list-group" dnd-sortable-container [sortableData]="tasks">
+  <li class="list-group-item" *ngFor="let task of tasks; let i = index;"
+      [class.closed]="task.closed"
+      [class.soon]="isSoon(task.date)"
+      [class.expired]="isExpired(task.date)"
+      dnd-sortable [sortableIndex]="i" [dragData]="task" (onDropSuccess)="onMove($event, i)"
+  >
+    <input type="checkbox" [(ngModel)]="task.closed">
+
+    <!--<button class="btn btn-sm btn-success" (click)="closeTask(task)"><i class="fa fa-check"></i></button>-->
+    <!--<button class="btn btn-sm btn-warning" (click)="editTask(task)"><i class="fa fa-edit"></i></button>-->
+    <span (click)="editTask(task)">
+      <i (click)="deleteTask(task)" class="mx-1 float-right fa fa-trash"></i>
+      <span class="task-header">{{ task.header }}</span>
+      <span class="mx-1 float-right task-date">{{ task.date | date }}</span>
+    </span>
+ </li>
+</ul>
+<span *ngIf="!tasks.length">You have no tasks. Yay!</span>
