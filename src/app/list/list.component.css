@@ -7,13 +7,35 @@ li div {
   display: inline-block;
 }
 
-.soon {
-  background-color: mistyrose;
-}
-
 .fa:hover {
   color: #4b4b4b;
 }
-.expired {
-  background-color: indianred;
+
+.task {
+  display: inline-block;
+  width: 36%;
+}
+
+.task .card-header {
+  padding-bottom: 0.4em;
+  padding-top: 0.4em;
+}
+
+.task .card-body {
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.task .card-footer {
+  padding-bottom: 0.4em;
+  padding-top: 0.4em;
+}
+
+.mock {
+  width: 100%;
+  font-size: 32px;
+  color: gainsboro;
+  height: 150px;
+  text-align: center;
+  line-height: 150px
 }

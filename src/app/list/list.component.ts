@@ -1,66 +1,56 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, ViewChild, Pipe, SimpleChange, SimpleChanges} from '@angular/core';
 import {Task} from '../task';
 import {TaskService} from '../task.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {TaskComponent} from '../task/task.component';
+import {TaskModalComponent} from '../task-modal/task-modal.component';
+import {ScopedPipe} from '../pipes/scoped.pipe';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  styleUrls: ['./list.component.css'],
 })
-export class ListComponent implements OnInit {
-  tasks: Task[];
+export class ListComponent implements OnInit, OnChanges {
+  tasks: Task[] = [];
 
-  isExpired(date) {
-    return (new Date(date)).valueOf() < (new Date()).valueOf();
-  }
+  @Input() scope: String;
 
-  isSoon(date) {
-    const threeDaysInMs = 1000 * 60 * 60 * 24 * 3;
-    const diff = ((new Date(date)).valueOf() - (new Date()).valueOf());
-    return diff > 0 && diff < threeDaysInMs;
-  }
 
   getTasks(): void {
-    this.tasks = this.taskService.getTasks();
-  }
-
-  editTask(task): void {
-    const modal = this.modalService.open(TaskComponent, {size: 'lg'});
-    modal.componentInstance.task = Object.assign({}, task);
-
-    modal.result.then((result) => {
-      this.taskService.updateTask(task.id, result);
-      this.taskService.saveTasks();
-    }, () => {});
-  }
-
-  deleteTask(task): void {
-    this.taskService.deleteTask(task);
+    this.taskService.getTasks()
+      .subscribe(tasks => {
+        this.tasks = this.scopedPipe.transform(tasks, this.scope);
+      });
   }
 
   createTask(): void {
-    const newTask: Task = {header: 'New Task', closed: false, date: (new Date()).toISOString()};
+    const newTask: Task = new Task({closed: false, date: (new Date()).toISOString()});
 
-    const modal = this.modalService.open(TaskComponent, {size: 'lg'});
+    const modal = this.modalService.open(TaskModalComponent, {size: 'lg', windowClass: 'shadowed'});
+
     modal.componentInstance.task = newTask;
 
-    modal.result.then((result) => {
-      this.taskService.createTask(result);
-    }, () => {});
+    modal.result.then((data) => {
+      this.taskService.createTask(data);
+    }, () => {
+      // do nothing
+    });
   }
 
-  closeTask(task): void {
-    this.taskService.closeTask(task);
-  }
-
-  onMove(task: Task, position: number) {
-    this.taskService.moveTask(task, position);
+  onMove() {
+    this.taskService.saveTasks();
   }
 
   constructor(public taskService: TaskService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private scopedPipe: ScopedPipe) {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const scope: SimpleChange = changes.scope;
+    if (scope.previousValue !== scope.currentValue) {
+      this.getTasks();
+    }
   }
 
   ngOnInit() {

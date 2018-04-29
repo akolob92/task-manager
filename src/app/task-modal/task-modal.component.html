@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    <span *ngIf="task.id">Task #{{task.id}}</span>
+    <span *ngIf="!task.id">New Task</span>
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form id="taskForm" name="taskForm" [formGroup]="taskForm">
+    <div class="row form-group">
+      <div class="col-7">
+        <input
+          placeholder="Header" id="header" name="header"
+          class="shadowed form-control" [(ngModel)]="copy.header"
+          formControlName="header"
+          [class.is-invalid]="header.invalid && header.dirty"
+          required minlength="3"/>
+        <textarea placeholder="Description" id="description" name="description"
+                  class="shadowed mt-3 form-control" [(ngModel)]="copy.description"
+                  [class.is-invalid]="description.invalid && description.dirty"
+                  formControlName="description"
+                  required minlength="3"></textarea>
+      </div>
+      <div class="col-5">
+        <owl-date-time-inline id="date" name="date"
+                              [class.is-invalid]="header.invalid && description.dirty"
+                              [(ngModel)]="copy.date" formControlName="date"
+                              required></owl-date-time-inline>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="shadowed btn btn-success" (click)="save()" [disabled]="taskForm.invalid">Save</button>
+  <button type="button" class="shadowed btn btn-light" (click)="cancel()">Cancel</button>
+</div>

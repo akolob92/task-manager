@@ -1,0 +1,13 @@
+textarea {
+  height: 382px;
+  resize: none; /* Запрещаем изменять размер */
+}
+
+owl-date-time-inline {
+  text-align: right;
+  display: block;
+}
+
+owl-date-time-inline.is-invalid owl-date-time-container {
+  border: 1px solid red;
+}

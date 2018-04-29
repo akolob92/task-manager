@@ -1,36 +1,38 @@
-import {Injectable, OnInit} from '@angular/core';
-
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs/observable/of';
 import {Task} from './task';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 const TASKS_KEY = 'tasks';
 
 @Injectable()
-export class TaskService implements OnInit {
-  tasks: Task[];
+export class TaskService {
+  private tasks: Task[];
+  private subject = new BehaviorSubject<Task[]>(this.tasks);
 
   saveTasks(): void {
     localStorage.setItem(TASKS_KEY, JSON.stringify(this.tasks));
+    this.subject.next(this.tasks);
   }
 
-  getTasks(): Task[] {
+  loadTasks(): void {
+    let data = [];
     try {
-      this.tasks = JSON.parse(localStorage.getItem(TASKS_KEY));
-      return this.tasks;
+      data = JSON.parse(localStorage.getItem(TASKS_KEY)) || [];
     } catch (e) {
-      return [];
+      data = [];
     }
+
+    this.tasks = data.map(t => new Task(t));
+    this.subject.next(this.tasks);
   }
 
-  moveTask(task: Task, position: number): void {
-    const current = this.tasks.find(t => t.id === task.id);
-    if (current) {
-      current.position = position;
-    }
-    this.tasks.sort((a, b) => a.position - b.position);
-    this.saveTasks();
+  getTasks(): Observable<Task[]> {
+    return this.subject.asObservable();
   }
 
-  createTask(task): void {
+  createTask(task): Task {
     const maxId = this.tasks.reduce((result: number, t: Task) => {
       return result > t.id ? result : t.id;
     }, 0);
@@ -42,43 +44,20 @@ export class TaskService implements OnInit {
     task.position = maxPosition + 1;
     this.tasks.push(task);
     this.saveTasks();
-  }
 
-  updateTask(id, updatedTask: Task): void {
-    const taskIndex = this.tasks.findIndex(t => +t.id === +updatedTask.id);
-    if (taskIndex > -1) {
-      this.tasks.splice(taskIndex, 1, updatedTask);
-      this.saveTasks();
-    }
+    return task;
   }
 
   deleteTask(task): void {
     const taskIndex = this.tasks.findIndex(t => +t.id === +task.id);
+
     if (taskIndex > -1) {
       this.tasks.splice(taskIndex, 1);
       this.saveTasks();
     }
   }
 
-  closeTask(task: Task): void {
-    const current = this.tasks.find(t => t.id === task.id);
-    if (current) {
-      current.closed = true;
-    }
-    this.saveTasks();
-  }
-
-  editTask(task: Task): void {
-    const current = this.tasks.find(t => t.id === task.id);
-    if (current) {
-      current.closed = true;
-    }
-    this.saveTasks();
-  }
-
-  ngOnInit() {
-  }
-
   constructor() {
+    this.loadTasks();
   }
 }

@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+.shadowed, owl-date-time-container, .shadowed  .modal-content {
+  -webkit-box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+
+  border-radius: 0;
+  outline: none;
+}
+
+.shadowed:focus, owl-date-time-container:focus, .shadowed  .modal-content:focus {
+  -webkit-box-shadow: 0 5px 5px -3px rgba(0,0,0,.4), 0 8px 10px 1px rgba(0,0,0,.28), 0 3px 14px 2px rgba(0,0,0,.24)!important;
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.4), 0 8px 10px 1px rgba(0,0,0,.28), 0 3px 14px 2px rgba(0,0,0,.24)!important;
+
+  border-radius: 0;
+  outline: none;
+}
+
+* {
+  font-family: "-apple-system";
+}
