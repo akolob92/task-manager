@@ -1,18 +1,21 @@
 <div class="m-1 card task shadowed"
      [ngClass]="{ 'border-secondary': task.isClosed(), 'border-danger': task.isExpired(), 'border-warning': task.isComing() }"
 >
-  <div class="card-header" (click)="editTask(task)">{{ task.header | ellipsis:30 }}<span class="float-right">#{{task.id}}</span></div>
+  <div class="card-header" (click)="editTask(task)">{{ task.header | ellipsis:30 }}<span class="float-right">#{{task.id}}</span>
+  </div>
   <div class="card-body" (click)="editTask(task)">
 
     <!--<h5 class="card-title">{{ task.description }}</h5>-->
     <p class="card-text">{{ task.description | ellipsis:30 }}</p>
   </div>
   <div class="card-footer">
-    <i (click)="toggleTask(task)" class="fa fa-{{ task.closed ? 'check-' : '' }}circle-o" placement="top"
-       ngbTooltip="Close Task"></i>
-    <i (click)="editTask(task)" class="fa fa-edit" placement="top" ngbTooltip="Edit Task"></i>
-    <i (click)="deleteTask(task)" class="fa fa-trash" placement="top" ngbTooltip="Delete task"></i>
+    <div class="task-actions">
+      <i (click)="toggleTask(task)" class="fa fa-{{ task.closed ? 'check-' : '' }}circle-o" placement="top"
+         ngbTooltip="Close Task"></i>
+      <i (click)="editTask(task)" class="fa fa-edit" placement="top" ngbTooltip="Edit Task"></i>
+      <i (click)="deleteTask(task)" class="fa fa-trash" placement="top" ngbTooltip="Delete task"></i>
+    </div>
 
-    <span class="float-right task-date">{{ task.date | date:'MMM d, y HH:mm' }}</span>
+    <div class="task-date"><span>{{ task.date | date:'MMM d, y HH:mm' }}</span></div>
   </div>
 </div>

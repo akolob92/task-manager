@@ -1,8 +1,8 @@
-<h1 class="text-center">Task Manager</h1>
-<nav class="text-center">
-  <button class="btn btn-link p-0 mx-1" *ngFor="let s of scopes" [class.active]="scope === s" (click)="scope = s">{{ s }}</button>
-</nav>
-
 <div class="row">
-  <div class="col-8 offset-2"><app-list [scope]="scope"></app-list></div>
+  <div class="col-8 offset-2">
+    <h1 class="text-center">Task Manager</h1>
+    <nav class="text-center">
+      <button class="btn btn-link p-0 mx-1" *ngFor="let s of scopes" [class.active]="scope === s" (click)="scope = s">{{ s }}</button>
+    </nav>
+    <app-list [scope]="scope"></app-list></div>
 </div>

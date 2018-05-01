@@ -11,3 +11,10 @@ owl-date-time-inline {
 owl-date-time-inline.is-invalid owl-date-time-container {
   border: 1px solid red;
 }
+
+@media (max-width: 991px) {
+  owl-date-time-inline {
+    text-align: center;
+    margin-top: 1em;
+  }
+}

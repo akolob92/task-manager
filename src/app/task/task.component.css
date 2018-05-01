@@ -14,6 +14,8 @@ li div {
 .task {
   display: inline-block;
   width: 32%;
+  min-width: 242px;
+  text-align: left;
 }
 
 .task .card-header {
@@ -29,6 +31,7 @@ li div {
 .task .card-footer {
   padding-bottom: 0.4em;
   padding-top: 0.4em;
+  white-space: nowrap;
 }
 
 .mock {
@@ -38,4 +41,17 @@ li div {
   height: 150px;
   text-align: center;
   line-height: 150px
+}
+
+.task-date {
+  display: inline-block;
+  width: 68%;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: pre;
+}
+
+.task-actions {
+  display: inline-block;
+  width: 30%;
 }

@@ -11,9 +11,16 @@ li div {
   color: #4b4b4b;
 }
 
+.task-container {
+  text-align: center;
+}
+
 .task {
   display: inline-block;
-  width: 36%;
+  width: 28%;
+  min-width: 242px;
+  margin: 1em;
+  touch-action: none; /* fix for mobile dnd */
 }
 
 .task .card-header {

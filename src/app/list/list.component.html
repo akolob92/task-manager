@@ -1,8 +1,9 @@
-<button class="shadowed ml-1 btn btn-sm btn-light" (click)="createTask()">Create task&nbsp;<i class="fa fa-plus"></i>
+<button class="shadowed ml-1 mt-1 btn btn-sm btn-light" (click)="createTask()">Create task&nbsp;<i class="fa fa-plus"></i>
 </button>
 <div *ngIf="tasks.length">
-  <div dnd-sortable-container [sortableData]="tasks">
+  <div class="task-container" dnd-sortable-container [sortableData]="tasks">
     <app-task
+      class="task"
       *ngFor="let task of tasks; let i = index;"
       [task]="task"
       dnd-sortable [dragEnabled]="scope === 'all'" [sortableIndex]="i" [dragData]="task" (onDropSuccess)="onMove()"></app-task>
